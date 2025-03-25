@@ -1,0 +1,488 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Eventfully</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Prototype_Eventfully.styles.css" asp-append-version="true" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-purple: #1f0647;
+            --magenta: #941c88;
+            --blue: #124a8b;
+            --dark-blue: #00244f;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--white);
+            color: var(--dark-blue);
+            overflow-x: hidden;
+        }
+
+        /* Custom Navigation Bar */
+        .custom-navbar {
+            background-color: white;
+            padding: 0.8rem 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-scrolled {
+            padding: 0.5rem 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .navbar-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Logo styling */
+        .brand-container {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo-container {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            transition: transform 0.6s ease;
+        }
+
+        .logo-container:hover {
+            transform: rotate(20deg);
+        }
+
+        .logo-outer {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: var(--dark-purple);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-middle {
+            width: 38px;
+            height: 38px;
+            background-color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.4s ease;
+        }
+
+        .logo-inner {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, var(--magenta), var(--blue));
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.5s ease;
+        }
+
+        .logo-inner::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent 30%, rgba(255, 255, 255, 0.3) 50%, transparent 70%);
+            animation: shine 3s infinite;
+        }
+
+        .logo-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-left: 1rem;
+            background: linear-gradient(45deg, var(--dark-purple), var(--magenta), var(--blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-text::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(45deg, var(--dark-purple), var(--magenta), var(--blue));
+            transition: width 0.3s ease;
+        }
+
+        .brand-container:hover .logo-text::after {
+            width: 100%;
+        }
+
+        .brand-container:hover .logo-text {
+            transform: translateY(-2px);
+        }
+
+        .brand-container:hover .logo-outer {
+            transform: scale(1.05);
+        }
+
+        .brand-container:hover .logo-middle {
+            transform: scale(1.08);
+        }
+
+        .brand-container:hover .logo-inner {
+            transform: scale(1.1);
+        }
+
+        /* Navigation Links */
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            color: var(--dark-blue);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            position: relative;
+            transition: all 0.3s ease;
+            padding: 0.5rem 0;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: linear-gradient(to right, var(--magenta), var(--blue));
+            transition: width 0.3s ease;
+            opacity: 0;
+        }
+
+        .nav-link:hover {
+            color: var(--magenta);
+        }
+
+        .nav-link:hover::before,
+        .nav-link.active::before {
+            width: 100%;
+            opacity: 1;
+        }
+
+        .nav-link.active {
+            color: var(--magenta);
+            font-weight: 600;
+        }
+
+        /* Mobile Toggle Button */
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .toggle-bar {
+            display: block;
+            width: 25px;
+            height: 3px;
+            margin: 5px 0;
+            background-color: var(--dark-blue);
+            transition: all 0.3s ease;
+            border-radius: 3px;
+        }
+
+        /* Animation for logo shine effect */
+        @@keyframes shine {
+            0% {
+                left: -100%;
+            }
+            20% {
+                left: 100%;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+
+        /* Main content adjustments */
+        main {
+            margin-top: 90px; /* To account for fixed navbar */
+            min-height: calc(100vh - 90px);
+        }
+
+        /* Bubble animation for navbar */
+        .navbar-bubble {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(148, 28, 136, 0.05);
+            z-index: -1;
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+
+        .brand-container:hover ~ .navbar-bubble.bubble-1 {
+            opacity: 1;
+            width: 100px;
+            height: 100px;
+            top: -30px;
+            left: -20px;
+            animation: float-slow 4s infinite ease-in-out;
+
+        }
+
+        .brand-container:hover ~ .navbar-bubble.bubble-2 {
+            opacity: 1;
+            width: 60px;
+            height: 60px;
+            top: 40px;
+            left: 50px;
+            animation: float-slow 4s infinite ease-in-out 1s;
+        }
+
+        @@keyframes float-slow {
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive styles */
+        @@media (max-width: 992px) {
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: 0;
+                right: 0;
+                background-color: white;
+                flex-direction: column;
+                padding: 1rem 2rem;
+                gap: 1rem;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+                z-index: 999;
+            }
+
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .mobile-toggle {
+                display: block;
+            }
+
+            .mobile-toggle.active .toggle-bar:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+
+            .mobile-toggle.active .toggle-bar:nth-child(2) {
+                opacity: 0;
+            }
+
+            .mobile-toggle.active .toggle-bar:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+        }
+
+        @@media (max-width: 576px) {
+            .custom-navbar {
+                padding: 0.8rem 1rem;
+            }
+
+            .navbar-scrolled {
+                padding: 0.5rem 1rem;
+            }
+
+            .logo-container {
+                width: 40px;
+                height: 40px;
+            }
+
+            .logo-outer {
+                width: 40px;
+                height: 40px;
+            }
+
+            .logo-middle {
+                width: 30px;
+                height: 30px;
+            }
+
+            .logo-inner {
+                width: 22px;
+                height: 22px;
+            }
+
+            .logo-text {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="custom-navbar" id="mainNav">
+            <div class="navbar-container">
+                <a class="brand-container" asp-area="" asp-controller="Home" asp-action="Index">
+                    <div class="logo-container">
+                        <div class="logo-outer">
+                            <div class="logo-middle">
+                                <div class="logo-inner"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="logo-text">Eventfully</div>
+                </a>
+                
+                <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation">
+                    <span class="toggle-bar"></span>
+                    <span class="toggle-bar"></span>
+                    <span class="toggle-bar"></span>
+                </button>
+                
+                <ul class="nav-links" id="navLinks">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Contact">Contact Us</a>
+                    </li>
+                </ul>
+                
+                <!-- Decorative bubbles -->
+                <div class="navbar-bubble bubble-1"></div>
+                <div class="navbar-bubble bubble-2"></div>
+            </div>
+        </nav>
+    </header>
+    
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Navigation scroll effect
+            const mainNav = document.getElementById('mainNav');
+            const mobileToggle = document.getElementById('mobileToggle');
+            const navLinks = document.getElementById('navLinks');
+            
+            // Highlight active nav link based on current URL
+            const currentLocation = window.location.pathname;
+            const navItems = document.querySelectorAll('.nav-link');
+            
+            navItems.forEach(item => {
+                const href = item.getAttribute('href');
+                // Safe check to avoid null references
+                if (href && currentLocation) {
+                    if ((href === currentLocation) || 
+                        (currentLocation.includes('/Home/Index') && href === '/') ||
+                        (href !== '/' && currentLocation.includes(href))) {
+                        item.classList.add('active');
+                    }
+                }
+            });
+            
+            // Scroll effect for navbar
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    mainNav.classList.add('navbar-scrolled');
+                } else {
+                    mainNav.classList.remove('navbar-scrolled');
+                }
+            });
+            
+            // Mobile menu toggle
+            if (mobileToggle) {
+                mobileToggle.addEventListener('click', function() {
+                    mobileToggle.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                });
+            }
+            
+            // Create hover effect for logo
+            const logoContainer = document.querySelector('.logo-container');
+            if (logoContainer) {
+                logoContainer.addEventListener('mouseover', function() {
+                    const logoInner = document.querySelector('.logo-inner');
+                    if (logoInner) {
+                        logoInner.style.animation = 'none';
+                        setTimeout(function() {
+                            logoInner.style.animation = '';
+                        }, 10);
+                    }
+                });
+            }
+            
+            // Close mobile menu when clicking a link
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    if (navLinks && navLinks.classList.contains('active')) {
+                        navLinks.classList.remove('active');
+                        if (mobileToggle) {
+                            mobileToggle.classList.remove('active');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+    
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,846 @@
+﻿@{
+    ViewData["Title"] = "Eventfully - Contact Us";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-purple: #1f0647;
+            --magenta: #941c88;
+            --blue: #124a8b;
+            --dark-blue: #00244f;
+            --white: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--white);
+            color: var(--dark-blue);
+            overflow-x: hidden;
+            width: 100vw;
+            height: 100vh;
+        }
+        
+        .container {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Section */
+        .header {
+            background-color: var(--dark-purple);
+            color: var(--white);
+            padding: 5rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 2;
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            animation: typing 3.5s steps(40) 1s forwards;
+            border-right: 3px solid var(--white);
+            width: 0;
+        }
+        
+        .page-subtitle {
+            font-size: 1.25rem;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        /* Decorative bubbles */
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        
+        .bubble-1 {
+            width: 120px;
+            height: 120px;
+            background-color: var(--dark-purple);
+            top: 20%;
+            right: 15%;
+            opacity: 0.8;
+        }
+        
+        .bubble-2 {
+            width: 80px;
+            height: 80px;
+            background-color: var(--blue);
+            top: 40%;
+            left: 10%;
+            opacity: 0.7;
+        }
+        
+        .bubble-3 {
+            width: 60px;
+            height: 60px;
+            background-color: var(--magenta);
+            bottom: 30%;
+            right: 25%;
+            opacity: 0.7;
+        }
+        
+        .bubble-4 {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--magenta);
+            background-color: transparent;
+            top: 15%;
+            left: 25%;
+        }
+        
+        .bubble-5 {
+            width: 50px;
+            height: 50px;
+            border: 2px solid var(--blue);
+            background-color: transparent;
+            bottom: 15%;
+            left: 35%;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 5rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--dark-purple);
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(to right, var(--dark-purple), var(--magenta));
+        }
+
+        .contact-container {
+            display: flex;
+            gap: 4rem;
+            margin-bottom: 5rem;
+        }
+        
+        .contact-form {
+            flex: 1;
+            background-color: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .contact-info {
+            flex: 1;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark-blue);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--magenta);
+            box-shadow: 0 0 0 3px rgba(148, 28, 136, 0.1);
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .form-submit {
+            background: linear-gradient(135deg, var(--magenta), var(--dark-purple));
+            color: white;
+            border: none;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        
+        .form-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(148, 28, 136, 0.3);
+        }
+        
+        .info-card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid var(--magenta);
+        }
+        
+        .info-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark-purple);
+            margin-bottom: 1rem;
+            position: relative;
+            padding-bottom: 0.8rem;
+        }
+        
+        .info-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--magenta);
+        }
+        
+        .info-content {
+            margin-bottom: 1.5rem;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .info-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(148, 28, 136, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: var(--magenta);
+            font-size: 1.2rem;
+        }
+        
+        .info-text {
+            color: #444;
+            line-height: 1.6;
+        }
+        
+        .info-text strong {
+            color: var(--dark-blue);
+            display: block;
+        }
+
+        /* Map Section */
+        .map-section {
+            padding: 0 2rem 5rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .map-container {
+            height: 400px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            padding: 5rem 2rem;
+            background-color: rgba(31, 6, 71, 0.03);
+            width: 100%;
+        }
+        
+        .faq-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 3rem;
+        }
+        
+        .faq-item {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 4px solid var(--blue);
+        }
+        
+        .faq-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        
+        .faq-question {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--dark-purple);
+            margin-bottom: 1rem;
+            position: relative;
+            padding-bottom: 0.8rem;
+        }
+        
+        .faq-question::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--blue);
+        }
+        
+        .faq-answer {
+            font-size: 0.95rem;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 3rem 2rem;
+            background-color: var(--dark-blue);
+            color: white;
+            text-align: center;
+            width: 100%;
+        }
+        
+        .footer-content {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+        
+        .footer-text {
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-link {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-link:hover {
+            color: var(--magenta);
+        }
+        
+        .copyright {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Navigation Section */
+        .nav-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.5rem 2rem;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-symbol {
+            width: 50px;
+            height: 50px;
+            position: relative;
+            background-color: var(--dark-purple);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .logo-inner {
+            width: 40px;
+            height: 40px;
+            background-color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .logo-center {
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, var(--magenta), var(--blue));
+            border-radius: 50%;
+        }
+        
+        .logo-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-left: 1rem;
+            color: var(--dark-purple);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-link {
+            color: var(--dark-blue);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--magenta);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--magenta);
+        }
+        
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+        
+        .nav-link.active {
+            color: var(--magenta);
+            font-weight: 600;
+        }
+        
+        /* Social Media Icons */
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(148, 28, 136, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--magenta);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            background-color: var(--magenta);
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        /* Success Message */
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            display: none;
+        }
+        
+        .success-message.show {
+            display: block;
+        }
+        
+        /* Responsive adjustments */
+        @@media (max-width: 992px) {
+            .contact-container {
+                flex-direction: column;
+            }
+            
+            .faq-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .page-title {
+                font-size: 3rem;
+            }
+        }
+        
+        @@media (max-width: 768px) {
+            .page-title {
+                font-size: 2.5rem;
+            }
+            
+            .page-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .logo-text {
+                font-size: 1.5rem;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+            }
+        }
+        
+        /* Animation for bubbles */
+        .float {
+            animation: floating 6s ease-in-out infinite;
+        }
+        
+        .float-delay-1 {
+            animation-delay: 1s;
+        }
+        
+        .float-delay-2 {
+            animation-delay: 2s;
+        }
+        
+        .float-delay-3 {
+            animation-delay: 3s;
+        }
+        
+        .float-delay-4 {
+            animation-delay: 4s;
+        }
+        
+        @@keyframes floating {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+        
+        /* Typing animation for page title */
+        @@keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        @@keyframes blink {
+            from, to { border-color: transparent }
+            50% { border-color: var(--white) }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Decorative Bubbles -->
+        <div class="bubble bubble-1 float"></div>
+        <div class="bubble bubble-2 float float-delay-1"></div>
+        <div class="bubble bubble-3 float float-delay-2"></div>
+        <div class="bubble bubble-4 float float-delay-3"></div>
+        <div class="bubble bubble-5 float float-delay-4"></div>
+        
+        <!-- Header Section -->
+        <section class="header">
+            <h1 class="page-title">Contact Us</h1>
+            <p class="page-subtitle">Ready to plan your next event? Have questions about our services? We'd love to hear from you.</p>
+        </section>
+        
+        <!-- Contact Section -->
+        <section class="contact-section">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-container">
+                <div class="contact-form">
+                    <div class="success-message" id="successMessage">
+                        <strong>Thank you for your message!</strong> We'll get back to you shortly.
+                    </div>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label class="form-label" for="name">Your Name</label>
+                            <input type="text" class="form-control" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="email">Email Address</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="phone">Phone Number</label>
+                            <input type="tel" class="form-control" id="phone">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="subject">Subject</label>
+                            <select class="form-control" id="subject">
+                                <option value="">Select subject</option>
+                                <option value="general">General Inquiry</option>
+                                <option value="quote">Request a Quote</option>
+                                <option value="booking">Event Booking</option>
+                                <option value="feedback">Feedback</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="message">Your Message</label>
+                            <textarea class="form-control" id="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="form-submit">Send Message</button>
+                    </form>
+                </div>
+                <div class="contact-info">
+                    <div class="info-card">
+                        <h3 class="info-title">Contact Information</h3>
+                        <div class="info-content">
+                            <div class="info-item">
+                                <div class="info-icon">📍</div>
+                                <div class="info-text">
+                                    <strong>Address</strong>
+                                    123 Bay View Boulevard<br>
+                                    Waterfront District<br>
+                                    Cape Town, 8001
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-icon">📱</div>
+                                <div class="info-text">
+                                    <strong>Phone</strong>
+                                    +27 21 123 4567
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-icon">📧</div>
+                                <div class="info-text">
+                                    <strong>Email</strong>
+                                    hello@eventfully.co.za
+                                </div>
+                            </div>
+                        </div>
+                        <div class="social-icons">
+                            <a href="#" class="social-icon">📘</a>
+                            <a href="#" class="social-icon">📸</a>
+                            <a href="#" class="social-icon">🐦</a>
+                            <a href="#" class="social-icon">📱</a>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <h3 class="info-title">Business Hours</h3>
+                        <div class="info-content">
+                            <div class="info-item">
+                                <div class="info-icon">🕒</div>
+                                <div class="info-text">
+                                    <strong>Monday to Friday</strong>
+                                    9:00 AM - 6:00 PM
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-icon">🕒</div>
+                                <div class="info-text">
+                                    <strong>Saturday</strong>
+                                    10:00 AM - 4:00 PM
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-icon">🕒</div>
+                                <div class="info-text">
+                                    <strong>Sunday</strong>
+                                    Closed (Available for Events)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Map Section -->
+        <section class="map-section">
+            <h2 class="section-title">Find Us</h2>
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3310.2768880912824!2d18.417979075937684!3d-33.91719222807519!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1dcc67562b043025%3A0x3fb53fb27d8cfd0d!2sV%26A%20Waterfront!5e0!3m2!1sen!2sza!4v1708791520837!5m2!1sen!2sza" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </section>
+        
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <div class="faq-container">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <h3 class="faq-question">How far in advance should I book your services?</h3>
+                        <p class="faq-answer">For large events like weddings, we recommend booking 6-12 months in advance. For corporate events, 3-6 months is typically sufficient. For smaller gatherings, we can sometimes accommodate shorter timelines, but earlier booking ensures greater flexibility in planning.</p>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <h3 class="faq-question">What areas do you service?</h3>
+                        <p class="faq-answer">We primarily serve Cape Town and surrounding areas, including the Winelands, Garden Route, and West Coast. For larger events, we can travel throughout South Africa. International coordination is also available for select clients.</p>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <h3 class="faq-question">How do your pricing packages work?</h3>
+                        <p class="faq-answer">We offer customized packages based on your specific needs. Factors that influence pricing include event size, complexity, location, and level of service required. We provide detailed quotes after an initial consultation where we learn about your vision and requirements.</p>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <h3 class="faq-question">Do you offer day-of coordination services?</h3>
+                        <p class="faq-answer">Yes, we offer day-of coordination services for clients who have planned their event but need professional assistance on the day. Our team will ensure everything runs smoothly, coordinate with vendors, manage the timeline, and handle any issues that arise.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-logo">Eventfully</div>
+                <p class="footer-text">Creating memorable events in Cape Town and beyond.</p>
+                <div class="footer-links">
+                    <a href="/" class="footer-link">Home</a>
+                    <a href="/About" class="footer-link">About Us</a>
+                    <a href="/Contact" class="footer-link">Contact</a>
+                </div>
+                <p class="copyright">© 2025 - Eventfully - All Rights Reserved</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Animation for floating bubbles
+        document.addEventListener('DOMContentLoaded', function() {
+            const bubbles = document.querySelectorAll('.bubble');
+            bubbles.forEach(bubble => {
+                const randomX = (Math.random() - 0.5) * 20;
+                const randomY = (Math.random() - 0.5) * 20;
+                const randomDuration = 5 + Math.random() * 5;
+                
+                bubble.style.animation = `floating ${randomDuration}s ease-in-out infinite`;
+            });
+            
+            // Contact form submission handling
+            const contactForm = document.getElementById('contactForm');
+            const successMessage = document.getElementById('successMessage');
+            
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const submitBtn = document.querySelector('.form-submit');
+                const originalText = submitBtn.textContent;
+                
+                // Simulate form submission
+                submitBtn.textContent = 'Sending...';
+                submitBtn.disabled = true;
+                
+                setTimeout(function() {
+                    // Show success message
+                    successMessage.classList.add('show');
+                    
+                    // Reset form
+                    contactForm.reset();
+                    
+                    // Reset button
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                    
+                    // Hide success message after some time
+                    setTimeout(function() {
+                        successMessage.classList.remove('show');
+                    }, 5000);
+                }, 1500);
+            });
+        });
+    </script>
+</body>
+</html>
